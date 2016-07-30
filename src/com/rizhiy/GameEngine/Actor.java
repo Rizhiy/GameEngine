@@ -6,9 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by rizhiy on 24/04/16.
- */
 public class Actor extends Tile implements KeyListener {
 
     //ratio by which maxSpeed we be reached. Higher values lead to faster acc/decelerations.
@@ -202,5 +199,13 @@ public class Actor extends Tile implements KeyListener {
     @Override
     public Actor makeCopy(){
         return new Actor(this);
+    }
+
+    public void addAnimation(MoveDirection direction, Animator animator) {
+        sprites.put(direction, animator);
+    }
+
+    public void setAnimations(Map<MoveDirection, Animator> animations) {
+        sprites = animations;
     }
 }

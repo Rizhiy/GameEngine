@@ -2,17 +2,11 @@ package com.rizhiy.GameEngine;
 
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 
-/**
- * Created by rizhiy on 26/07/16.
- */
 public class World {
     private final int width;
     private final int height;
-
-    private Actor player;
 
     private TileManager tiles = new TileManager();
 
@@ -27,35 +21,25 @@ public class World {
                 tiles.addTile(colourCode.get(colour));
             }
         }
-
-        this.player = new Actor(this);
     }
 
     public World(World original) {
         width = original.width;
         height = original.height;
-        player = new Actor(original.player);
         tiles = new TileManager(tiles);
     }
 
     public World(World one, World two, double alpha) {
         this(one);
-        player = new Actor(one.player, two.player, alpha);
         tiles = new TileManager(one.tiles, two.tiles, alpha);
     }
 
     public void update(double deltaTime) {
         tiles.update(deltaTime);
-        player.update(deltaTime);
     }
 
     public void render(GameWindow g) {
         tiles.render(g);
-        player.render(g);
-    }
-
-    public Actor getPlayer() {
-        return player;
     }
 
     public int getWidth() {
