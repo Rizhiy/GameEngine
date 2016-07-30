@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class Actor extends Tile implements KeyListener {
 
+    public enum ActorType implements TileType {ACTOR}
+
     //ratio by which maxSpeed we be reached. Higher values lead to faster acc/decelerations.
     private double acceleration = 1;
     private double deceleration = 3;
@@ -41,7 +43,7 @@ public class Actor extends Tile implements KeyListener {
     }
 
     public Actor(World host, Vector2D position, Vector2D size){
-        super(position,size,true,TileType.ACTOR,host);
+        super(position, size, true, ActorType.ACTOR, host);
     }
 
     public Actor(World host, Vector2D position){

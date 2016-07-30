@@ -2,13 +2,8 @@ package com.rizhiy.GameEngine;
 
 import java.util.ArrayList;
 
-/**
- * Created by rizhiy on 24/04/16.
- */
 public abstract class Tile {
-    public enum TileType {BLANK, ACTOR}
-
-    private   TileType type;
+    protected TileType type;
     protected Vector2D position;
     protected Vector2D size;
     private   boolean  solid;
@@ -28,16 +23,12 @@ public abstract class Tile {
         this(pos, new Vector2D(), solid, type, host);
     }
 
-    public Tile(Vector2D pos, boolean solid, World host) {
-        this(pos, solid, TileType.BLANK, host);
+    public Tile(Vector2D pos, TileType type, World host) {
+        this(pos, true, type, host);
     }
 
-    public Tile(Vector2D pos, World host) {
-        this(pos, true, host);
-    }
-
-    public Tile(World host) {
-        this(new Vector2D(), host);
+    public Tile(TileType type, World host) {
+        this(new Vector2D(), type, host);
     }
 
     public Tile(Tile original) {
@@ -82,11 +73,8 @@ public abstract class Tile {
     }
 
     public boolean contains(Vector2D v) {
-        if (v.getX() > position.getX() && v.getX() < position.getX() + size.getX() &&
-            v.getY() > position.getY() && v.getY() < position.getY() + size.getY()) {
-            return true;
-        }
-        return false;
+        return v.getX() > position.getX() && v.getX() < position.getX() + size.getX() &&
+               v.getY() > position.getY() && v.getY() < position.getY() + size.getY();
     }
 
     public double getWidth(){

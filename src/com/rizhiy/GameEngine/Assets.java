@@ -6,9 +6,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by rizhiy on 24/04/16.
- */
 public class Assets {
 
     private Map<Integer,SpriteSheet> spriteSheets;
@@ -16,7 +13,7 @@ public class Assets {
     //Here until I start encoding size in the texture file
     public final int TextureSize = 16;
 
-    private Map<Tile.TileType,BufferedImage> tiles = new HashMap<>();
+    private Map<TileType, BufferedImage> tiles = new HashMap<>();
 
     public int addSpriteSheet(String path){
         final int currentNumber = spriteSheets.size();
@@ -31,7 +28,7 @@ public class Assets {
         return TextureSize;
     }
 
-    public BufferedImage getImage(Tile.TileType t){
+    public BufferedImage getImage(TileType t) {
         return tiles.get(t);
     }
 

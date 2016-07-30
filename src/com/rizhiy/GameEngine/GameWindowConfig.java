@@ -1,14 +1,10 @@
 package com.rizhiy.GameEngine;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.nio.file.Path;
 import java.util.Map;
 
-/**
- * Created by rizhiy on 29/07/16.
- */
 public class GameWindowConfig implements KeyListener{
     private double  zoomLevel;
     private double  zoomChangeRate;
@@ -89,6 +85,9 @@ public class GameWindowConfig implements KeyListener{
         switch (keyBindings.getOrDefault(keyEvent.getKeyCode(), Action.UNBOUND)) {
             case CAMERA_FOLLOW:
                 screenFollow = !screenFollow;
+                break;
+            case EXIT:
+                System.exit(0);
                 break;
         }
     }
