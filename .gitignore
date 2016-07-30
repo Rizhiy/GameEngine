@@ -6,4 +6,5 @@
 *.iml
 out
 gen
+production/*
 # Created by .ignore support plugin (hsz.mobi)

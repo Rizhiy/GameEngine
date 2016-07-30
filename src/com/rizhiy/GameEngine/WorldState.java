@@ -35,7 +35,6 @@ public class WorldState {
     }
 
     public void render(GameWindow window) {
-        window.updateScreenPosition();
         world.render(window);
     }
 
