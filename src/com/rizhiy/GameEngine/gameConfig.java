@@ -1,10 +1,6 @@
 package com.rizhiy.GameEngine;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-import java.nio.file.Path;
+import java.io.*;
 import java.util.Map;
 
 public class gameConfig implements Serializable {
@@ -19,11 +15,11 @@ public class gameConfig implements Serializable {
         return keyBindings;
     }
 
-    public static gameConfig loadKeyBindings(Path path) throws IOException {
+    public static gameConfig loadConfig(File file) throws IOException {
         gameConfig config;
 
         try {
-            FileInputStream   fis = new FileInputStream(path.toFile());
+            FileInputStream   fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             try {
@@ -41,5 +37,20 @@ public class gameConfig implements Serializable {
         }
 
         return config;
+    }
+
+    public void saveConfig(File file) throws IOException {
+        FileOutputStream   fos = null;
+        ObjectOutputStream oos;
+        try {
+            fos = new FileOutputStream(file, false);
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(this);
+        } finally {
+            if (fos != null) {
+                fos.close();
+            }
+        }
+
     }
 }
