@@ -3,11 +3,11 @@ package com.rizhiy.GameEngine;
 import java.io.*;
 import java.util.Map;
 
-public class gameConfig implements Serializable {
+public class GameConfig implements Serializable {
 
     private final Map<Integer, Action> keyBindings;
 
-    public gameConfig(Map<Integer, Action> keyBindings) {
+    public GameConfig(Map<Integer, Action> keyBindings) {
         this.keyBindings = keyBindings;
     }
 
@@ -15,15 +15,15 @@ public class gameConfig implements Serializable {
         return keyBindings;
     }
 
-    public static gameConfig loadConfig(File file) throws IOException {
-        gameConfig config;
+    public static GameConfig loadConfig(File file) throws IOException {
+        GameConfig config;
 
         try {
             FileInputStream   fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             try {
-                config = (gameConfig) ois.readObject();
+                config = (GameConfig) ois.readObject();
             } catch (ClassNotFoundException e) {
                 System.err.println(e.getMessage());
                 throw new IOException();
