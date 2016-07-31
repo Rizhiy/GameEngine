@@ -13,18 +13,18 @@ public class Loop extends Thread {
     private GameWindowConfig previousWindowConfig;
     private GameWindowConfig currentWindowConfig;
 
-    private GameWindow screen;
+    private GameWindow window;
 
     private WorldState previous;
     private WorldState current;
 
     private boolean done = false;
 
-    public Loop(double dt, WorldState s, GameWindow screen) {
+    public Loop(double dt, WorldState s, GameWindow window) {
         this.dt = dt;
         this.current = s;
-        this.screen = screen;
-        this.currentWindowConfig = screen.getConfig();
+        this.window = window;
+        this.currentWindowConfig = window.getConfig();
     }
 
     @Override
@@ -46,8 +46,13 @@ public class Loop extends Thread {
             }
 
             double alpha = accumulator/dt;
-            screen.setConfig(new GameWindowConfig(previousWindowConfig, currentWindowConfig, alpha));
-            new WorldState(previous,current,alpha).render(screen);
+            window.setConfig(new GameWindowConfig(previousWindowConfig, currentWindowConfig, alpha));
+            window.clear();
+            new WorldState(previous, current, alpha).render(window);
         }
+    }
+
+    public GameWindow getWindow() {
+        return window;
     }
 }

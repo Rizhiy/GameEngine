@@ -17,6 +17,10 @@ public class Engine {
     public Engine(WorldState s, Loop l) {
         this.s = s;
         this.l = l;
+
+        this.l.getWindow().addKeyListener(s.getPlayer());
+        this.l.getWindow().addKeyListener(this.l.getWindow().getConfig());
+        this.l.getWindow().setVisible(true);
     }
 
     public Engine(String title, WorldState s) {

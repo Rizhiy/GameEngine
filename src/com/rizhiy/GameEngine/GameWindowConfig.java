@@ -147,4 +147,8 @@ public class GameWindowConfig implements KeyListener{
     public double getZoomLevel(){
         return zoomLevel;
     }
+
+    public void setZoomLevel(double zoomLevel) {
+        this.zoomLevel = zoomLevel;
+    }
 }

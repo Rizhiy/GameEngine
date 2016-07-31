@@ -1,30 +1,29 @@
 package com.rizhiy.GameEngine;
 
 import java.awt.image.BufferedImage;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Assets {
 
-    private Map<Integer,SpriteSheet> spriteSheets;
+    private List<SpriteSheet> spriteSheets;
 
     //Here until I start encoding size in the texture file
     public final int TextureSize = 16;
 
-    private Map<TileType, BufferedImage> tiles = new HashMap<>();
+    private Map<TileType, BufferedImage> tiles;
 
-    public int addSpriteSheet(String path){
-        final int currentNumber = spriteSheets.size();
-        Path spriteSheetPath = Paths.get(path);
-        SpriteSheet s = new SpriteSheet();
-        s.setSpriteSheet(ImageLoader.loadImageFrom(spriteSheetPath), new Vector2D(16,16));
-        spriteSheets.put(currentNumber,s);
-        return currentNumber;
+    public SpriteSheet addSpriteSheet(File spriteSheet) {
+        final int   currentNumber = spriteSheets.size();
+        SpriteSheet s             = new SpriteSheet(ImageLoader.loadImageFrom(spriteSheet), new Vector2D(16, 16));
+        spriteSheets.add(currentNumber, s);
+        return s;
     }
 
-    public int getTextureSize(){
+    public int getTextureSize() {
         return TextureSize;
     }
 
@@ -32,4 +31,12 @@ public class Assets {
         return tiles.get(t);
     }
 
+    public Assets() {
+        this.spriteSheets = new ArrayList<>();
+        this.tiles = new HashMap<>();
+    }
+
+    public void addTile(TileType type, BufferedImage img) {
+        tiles.put(type, img);
+    }
 }

@@ -84,4 +84,16 @@ public abstract class Tile {
     public double getHeight(){
         return size.getY();
     }
+
+    void setSize(Vector2D size) {
+        this.size = size;
+    }
+
+    void setPosition(Vector2D position) {
+        this.position = position;
+    }
+
+    void setHost(World world) {
+        this.host = world;
+    }
 }

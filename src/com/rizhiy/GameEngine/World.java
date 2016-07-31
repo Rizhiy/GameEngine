@@ -1,32 +1,46 @@
 package com.rizhiy.GameEngine;
 
 import java.awt.image.BufferedImage;
-import java.nio.file.Path;
+import java.io.File;
 import java.util.Map;
 
 public class World {
     private final int width;
     private final int height;
 
+    private Vector2D playerStartPosition;
+
     private TileManager tiles = new TileManager();
 
-    public World(Path mapFilePath, Map<Integer, Tile> colourCode) {
+    public World(File mapFilePath, Map<Integer, Tile> colourCode) {
         BufferedImage map = ImageLoader.loadImageFrom(mapFilePath);
         this.width = map.getWidth();
         this.height = map.getHeight();
 
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
-                int colour = map.getRGB(x, y);
-                tiles.addTile(colourCode.get(colour));
+                int  colour = map.getRGB(x, y) & 0xFFFFFF;
+                Tile tile;
+                if (colourCode.get(colour) != null) {
+                    tile = colourCode.get(colour).makeCopy();
+                } else {
+                    continue;
+                }
+                tile.setPosition(new Vector2D(x, y));
+                tile.setHost(this);
+                tile.setSize(new Vector2D(1, 1));
+                this.tiles.addTile(tile);
             }
         }
+
+        this.playerStartPosition = new Vector2D(this.width / 2, this.height / 2);
     }
 
     public World(World original) {
         width = original.width;
         height = original.height;
-        tiles = new TileManager(tiles);
+        tiles = new TileManager(original.tiles);
+        playerStartPosition = original.playerStartPosition;
     }
 
     public World(World one, World two, double alpha) {
@@ -61,5 +75,17 @@ public class World {
             }
         }
         return false;
+    }
+
+    public void setPlayerStartPosition(Vector2D position) {
+        playerStartPosition = position;
+    }
+
+    public Vector2D getPlayerStartPosition() {
+        return playerStartPosition;
+    }
+
+    public TileManager getTiles() {
+        return tiles;
     }
 }
