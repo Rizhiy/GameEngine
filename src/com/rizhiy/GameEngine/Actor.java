@@ -3,7 +3,6 @@ package com.rizhiy.GameEngine;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -214,9 +213,5 @@ public class Actor extends Tile implements KeyListener {
 
     public void setKeyBindings(Map<Integer, Action> bindings) {
         this.keyBindings = bindings;
-    }
-
-    public void setKeyBindings(Path path) {
-        setKeyBindings(Utilities.loadKeyBindings(path));
     }
 }
