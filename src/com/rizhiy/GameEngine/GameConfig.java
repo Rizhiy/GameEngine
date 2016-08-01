@@ -46,6 +46,10 @@ public class GameConfig implements Serializable {
             fos = new FileOutputStream(file, false);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(this);
+        } catch (IOException e) {
+            System.err.println("Coulnd't load config");
+            throw e;
+
         } finally {
             if (fos != null) {
                 fos.close();

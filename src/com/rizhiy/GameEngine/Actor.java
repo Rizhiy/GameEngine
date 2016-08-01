@@ -43,6 +43,7 @@ public class Actor extends Tile implements KeyListener {
 
     public Actor(World host, Vector2D position, Vector2D size){
         super(position, size, true, ActorType.ACTOR, host);
+        this.position = host.getPlayerStartPosition();
     }
 
     public Actor(World host, Vector2D position){

@@ -6,7 +6,7 @@ public abstract class Tile {
     protected TileType type;
     protected Vector2D position;
     protected Vector2D size;
-    private   boolean  solid;
+    protected boolean  solid;
 
     private World host;
 
@@ -85,15 +85,15 @@ public abstract class Tile {
         return size.getY();
     }
 
-    void setSize(Vector2D size) {
+    protected void setSize(Vector2D size) {
         this.size = size;
     }
 
-    void setPosition(Vector2D position) {
+    protected void setPosition(Vector2D position) {
         this.position = position;
     }
 
-    void setHost(World world) {
+    protected void setHost(World world) {
         this.host = world;
     }
 }

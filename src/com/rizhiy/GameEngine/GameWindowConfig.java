@@ -4,15 +4,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Map;
 
-public class GameWindowConfig implements KeyListener{
+public class GameWindowConfig implements KeyListener {
     private double  zoomLevel;
     private double  zoomChangeRate;
     private boolean increaseZoom, decreaseZoom;
 
     private Vector2D screenPosition;
     private boolean  screenFollow;
-    private Actor    followTarget;
-    private double screenSpeed;
+    private Tile     followTarget;
+    private double   screenSpeed;
 
     private Map<Integer, Action> keyBindings;
 
@@ -20,13 +20,13 @@ public class GameWindowConfig implements KeyListener{
 
     public GameWindowConfig() {
         zoomLevel = 1.5;
-        zoomChangeRate = 1.005;
+        zoomChangeRate = 1.1;
         increaseZoom = false;
         decreaseZoom = false;
         screenPosition = new Vector2D();
         screenFollow = true;
         followTarget = null;
-        screenSpeed = 1;
+        screenSpeed = 3;
     }
 
     public GameWindowConfig(GameWindowConfig original) {
@@ -50,25 +50,26 @@ public class GameWindowConfig implements KeyListener{
         if (screenFollow && followTarget != null) {
             screenPosition = followTarget.getPosition();
         } else {
-            if(up){
-                screenPosition = new Vector2D(screenPosition.getX(), screenPosition.getY()-screenSpeed*dt);
+            if (up) {
+                screenPosition = new Vector2D(screenPosition.getX(), screenPosition.getY() - screenSpeed * dt);
             }
-            if(down){
-                screenPosition = new Vector2D(screenPosition.getX(), screenPosition.getY()+screenSpeed*dt);
+            if (down) {
+                screenPosition = new Vector2D(screenPosition.getX(), screenPosition.getY() + screenSpeed * dt);
             }
-            if(left){
-                screenPosition = new Vector2D(screenPosition.getX()-screenSpeed*dt, screenPosition.getY());
+            if (left) {
+                screenPosition = new Vector2D(screenPosition.getX() - screenSpeed * dt, screenPosition.getY());
             }
-            if(right){
-                screenPosition = new Vector2D(screenPosition.getX()+screenSpeed*dt, screenPosition.getY());
+            if (right) {
+                screenPosition = new Vector2D(screenPosition.getX() + screenSpeed * dt, screenPosition.getY());
             }
         }
     }
 
-    public void update(double deltatime){
-        if (increaseZoom) zoomLevel *= zoomChangeRate;
-        if (decreaseZoom) zoomLevel /= zoomChangeRate;
+    public void update(double deltatime) {
+        if (increaseZoom) zoomLevel *= (zoomChangeRate - 1) * deltatime + 1;
+        if (decreaseZoom) zoomLevel /= (zoomChangeRate - 1) * deltatime + 1;
         updateScreenPosition(deltatime);
+        System.out.println(screenPosition);
     }
 
     public void setKeyBindings(Map<Integer, Action> bindings) {
@@ -80,9 +81,6 @@ public class GameWindowConfig implements KeyListener{
         switch (keyBindings.getOrDefault(keyEvent.getKeyCode(), Action.UNBOUND)) {
             case CAMERA_FOLLOW:
                 screenFollow = !screenFollow;
-                break;
-            case EXIT:
-                System.exit(0);
                 break;
         }
     }
@@ -96,17 +94,23 @@ public class GameWindowConfig implements KeyListener{
             case DECREASE_ZOOM:
                 decreaseZoom = true;
                 break;
-            case MOVE_UP:
+            case CAMERA_MOVE_UP:
                 up = true;
                 break;
-            case MOVE_DOWN:
+            case CAMERA_MOVE_DOWN:
                 down = true;
                 break;
-            case MOVE_LEFT:
+            case CAMERA_MOVE_LEFT:
                 left = true;
                 break;
-            case MOVE_RIGHT:
+            case CAMERA_MOVE_RIGHT:
                 right = true;
+                break;
+            case EXIT:
+                System.exit(0);
+                break;
+            case CAMERA_FOLLOW:
+                screenFollow = true;
                 break;
         }
     }
@@ -120,30 +124,37 @@ public class GameWindowConfig implements KeyListener{
             case DECREASE_ZOOM:
                 decreaseZoom = false;
                 break;
-            case MOVE_UP:
+            case CAMERA_MOVE_UP:
                 up = false;
                 break;
-            case MOVE_DOWN:
+            case CAMERA_MOVE_DOWN:
                 down = false;
                 break;
-            case MOVE_LEFT:
+            case CAMERA_MOVE_LEFT:
                 left = false;
                 break;
-            case MOVE_RIGHT:
+            case CAMERA_MOVE_RIGHT:
                 right = false;
+                break;
+            case CAMERA_FOLLOW:
+                screenFollow = false;
                 break;
         }
     }
 
-    public Vector2D getScreenPosition(){
+    public Vector2D getScreenPosition() {
         return screenPosition;
     }
 
-    public double getZoomLevel(){
+    public double getZoomLevel() {
         return zoomLevel;
     }
 
     public void setZoomLevel(double zoomLevel) {
         this.zoomLevel = zoomLevel;
+    }
+
+    public void setFollowTarget(Tile target) {
+        this.followTarget = target;
     }
 }

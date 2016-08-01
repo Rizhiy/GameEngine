@@ -1,8 +1,5 @@
 package com.rizhiy.GameEngine;
 
-/**
- * Created by rizhiy on 26/07/16.
- */
 public enum Action {
     INCREASE_ZOOM,
     DECREASE_ZOOM,
@@ -12,5 +9,9 @@ public enum Action {
     MOVE_UP,
     MOVE_RIGHT,
     MOVE_DOWN,
-    MOVE_LEFT
+    MOVE_LEFT,
+    CAMERA_MOVE_UP,
+    CAMERA_MOVE_RIGHT,
+    CAMERA_MOVE_DOWN,
+    CAMERA_MOVE_LEFT
 }

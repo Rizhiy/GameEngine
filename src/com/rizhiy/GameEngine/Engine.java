@@ -2,9 +2,6 @@ package com.rizhiy.GameEngine;
 
 import java.awt.*;
 
-/**
- * Created by rizhiy on 07/06/16.
- */
 public class Engine {
     private final WorldState s;
     private final Loop       l;
@@ -24,9 +21,9 @@ public class Engine {
     }
 
     public Engine(String title, WorldState s) {
-        this(s, new Loop(0.1, s, new GameWindow(title,
-                                                GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDisplayMode().getWidth(),
-                                                GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDisplayMode().getHeight())));
+        this(s, new Loop(0.1, 60, s, new GameWindow(title,
+                                                    GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDisplayMode().getWidth(),
+                                                    GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDisplayMode().getHeight())));
     }
 
     public static int getWidth() {

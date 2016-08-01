@@ -1,12 +1,8 @@
 package com.rizhiy.GameEngine;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by rizhiy on 28/04/16.
- */
 public class Animator {
 
     private List<BufferedImage> frames;
@@ -24,6 +20,7 @@ public class Animator {
 
     public void update(long time) {
         if (running && time - prevTime >= period) {
+            currentFrame++;
             if (currentFrame == frames.size()) {
                 if (repeat) {
                     currentFrame = 0;
@@ -31,7 +28,6 @@ public class Animator {
                     return;
                 }
             }
-            currentFrame++;
             prevTime = time;
         }
     }
@@ -59,11 +55,7 @@ public class Animator {
     }
 
     public boolean isDoneAnimating() {
-        if (!repeat && currentFrame == frames.size()){
-            return true;
-        } else {
-            return false;
-        }
+        return !repeat && currentFrame == frames.size();
     }
 
     public BufferedImage getSprite(){

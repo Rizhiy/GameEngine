@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/**
- * Created by rizhiy on 22/04/16.
- */
 public class GameWindow extends JFrame {
     private boolean fullScreen     = false;
     private int     fullScreenMode = 0;
@@ -100,10 +97,10 @@ public class GameWindow extends JFrame {
 
     public void draw(BufferedImage img, Vector2D position, Vector2D size) {
         screen.drawImage(img,
-                         (int) ((position.getX() * assets.getTextureSize() + config.getScreenPosition().getX()) * config.getZoomLevel()),
-                         (int) ((position.getY() * assets.getTextureSize() + config.getScreenPosition().getY()) * config.getZoomLevel()),
-                         (int) (size.getX() * assets.getTextureSize() * config.getZoomLevel()),
-                         (int) (size.getY() * assets.getTextureSize() * config.getZoomLevel()), null);
+                         (int) Math.ceil((position.getX() - config.getScreenPosition().getX()) * assets.getTextureSize() * config.getZoomLevel() + getWidth() / 2),
+                         (int) Math.ceil((position.getY() - config.getScreenPosition().getY()) * assets.getTextureSize() * config.getZoomLevel() + getHeight() / 2),
+                         (int) Math.ceil(size.getX() * assets.getTextureSize() * config.getZoomLevel()),
+                         (int) Math.ceil(size.getY() * assets.getTextureSize() * config.getZoomLevel()), null);
     }
 
     public void display(Tile b) {
@@ -114,6 +111,13 @@ public class GameWindow extends JFrame {
         screen.drawString(s,
                           (int) ((position.getX() * assets.getTextureSize() + config.getScreenPosition().getX()) * config.getZoomLevel()),
                           (int) ((position.getY() * assets.getTextureSize() + config.getScreenPosition().getY()) * config.getZoomLevel()));
+    }
+
+    public void display(String s, AbsoluteScreenLocation location) {
+        screen.setColor(Color.WHITE);
+        screen.drawString(s,
+                          (int) (location.getX() * getWidth() + getWidth()) / 2,
+                          (int) (location.getY() * getHeight() + getHeight()) / 2);
     }
 
     public void display(Actor a, BufferedImage img) {
@@ -133,7 +137,12 @@ public class GameWindow extends JFrame {
     }
 
     public void clear() {
-        Graphics g2 = getGraphics();
+        screen.setColor(Color.BLACK);
+        screen.fillRect(0, 0, getWidth(), getHeight());
+    }
+
+    public void updateScreen() {
+        Graphics2D g2 = (Graphics2D) getGraphics();
         if (g2 != null) {
             g2.drawImage(background, 0, 0, null);
         }
