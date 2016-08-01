@@ -24,7 +24,7 @@ public class GameWindowConfig implements KeyListener {
         increaseZoom = false;
         decreaseZoom = false;
         screenPosition = new Vector2D();
-        screenFollow = true;
+        screenFollow = false;
         followTarget = null;
         screenSpeed = 3;
     }
